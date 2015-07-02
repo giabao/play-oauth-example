@@ -1,0 +1,23 @@
+@import play.api.mvc.Security.AuthenticatedRequest
+
+@()(implicit request: AuthenticatedRequest[AnyContent, User], messages: Messages)
+
+@s = {
+    <link href="@routes.Assets.at("stylesheets/main.css")" rel="stylesheet">
+}
+
+@c = {
+    @part.navbar("home", request.user)
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1>@Messages("application.title")</h1>
+            <p>@Messages("application.description")</p>
+            <p>
+                <a class="btn btn-lg btn-primary" href="@routes.Apps.list.url">@Messages("apps.link") &raquo;</a>
+            </p>
+        </div>
+    </div>
+}
+
+@main("Oauth 2")(c, s)
