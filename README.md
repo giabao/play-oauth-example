@@ -1,11 +1,11 @@
 #play-oauth-server
 
 [OAuth 2](http://tools.ietf.org/html/rfc6749) server implemented using:
-	+ [Play framework 2.4.x](https://github.com/playframework/playframework) 
-	+ [play-oauth](https://github.com/giabao/play-oauth)
-	+ [couchbase 4.0](http://www.couchbase.com/nosql-databases/downloads#PreRelease)
-	+ [couchbase-scala](https://github.com/giabao/couchbase-scala)
 
++ [Play framework 2.4.x](https://github.com/playframework/playframework) 
++ [play-oauth](https://github.com/giabao/play-oauth)
++ [couchbase 4.0](http://www.couchbase.com/nosql-databases/downloads#PreRelease)
++ [couchbase-scala](https://github.com/giabao/couchbase-scala)
 
 ### references
 + [OAuth 2](http://tools.ietf.org/html/rfc6749)
