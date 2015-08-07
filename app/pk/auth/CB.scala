@@ -5,9 +5,15 @@ import play.api.inject.ApplicationLifecycle
 import com.sandinh.couchbase.CBCluster
 import play.api.libs.json.{JsNumber, JsObject, JsValue}
 
+import scala.concurrent.{ExecutionContext, Future}
+
 @Singleton
 class CB @Inject() (lifecycle: ApplicationLifecycle, cluster: CBCluster) {
-  lifecycle.addStopHook(cluster.disconnectFuture)
+  import ExecutionContext.Implicits.global
+
+  lifecycle.addStopHook(() => Future {
+    cluster.disconnect()
+  })
 
   lazy val authBucket = cluster.openBucket("auth")
 }
