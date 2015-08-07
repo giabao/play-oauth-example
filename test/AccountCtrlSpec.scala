@@ -1,5 +1,5 @@
+import models.{Signup, Signin}
 import org.specs2.mutable._
-import pk.auth.{Signin, SignupAcc}
 import play.api.http.Status.{OK, BAD_REQUEST, CONFLICT, UNAUTHORIZED}
 import play.api.libs.json.{Writes, Json}
 import play.api.test.Helpers._
@@ -13,7 +13,7 @@ class AccountCtrlSpec extends Specification { sequential
     status(signup) must equalTo(code)
   }
 
-  implicit val wrt1 = Json.writes[SignupAcc]
+  implicit val wrt1 = Json.writes[Signup]
   implicit val wrt2 = Json.writes[Signin]
 
   "AccountCtrl" should {
@@ -22,18 +22,15 @@ class AccountCtrlSpec extends Specification { sequential
       |UPSERT INTO pk(KEY, VALUE) VALUES ("pk.auth.ac.id", 0) RETURNING *;
     """.stripMargin in new WithApplication {
       test(Json.obj("foo" -> "baz"))
-      test(SignupAcc("abc", "a12345", None))
-      test(SignupAcc("abc@def.com", "a1234", None))
-      test(SignupAcc("abc@def.com", "abcdef", None))
-      test(SignupAcc("abc@def.com", "123456", None))
-      test(SignupAcc("abc@def.com", "12345#", None))
-      test(SignupAcc("abc@def.com", "a12345678901234567890", None))
-
-      test(SignupAcc("abc@def.com", "a23456", None), OK)
-
-      test(SignupAcc("abc@def.com", "abcde#", None), CONFLICT)
-
-      test(SignupAcc("abc2@def.com", "a23456", Some(Json.obj("foo" -> "baz"))), OK)
+      test(Signup("abc", "", "a12345"))
+      test(Signup("abc@def.com", "", "a1234"))
+      test(Signup("abc@def.com", "", "abcdef"))
+      test(Signup("abc@def.com", "", "123456"))
+      test(Signup("abc@def.com", "", "12345#"))
+      test(Signup("abc@def.com", "", "a12345678901234567890"))
+      test(Signup("abc@def.com", "", "a23456"), OK)
+      test(Signup("abc@def.com", "", "abcde#"), CONFLICT)
+      test(Signup("abc2@def.com", "", "a23456"), OK)
     }
 
     "signin" in new WithApplication {
